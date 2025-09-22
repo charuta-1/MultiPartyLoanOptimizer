@@ -1,12 +1,21 @@
 
-# Multi-Party Loan Settlement Optimizer
 
-This project implements an optimizer to minimize multi-party loan transactions using:
-- Graphs (Adjacency List)
-- Priority Queue
-- Hash Maps
-- Greedy Algorithm
-- JSON Backup + Notifications
+## 🔎 Project Overview
+A DSA project to optimize loan settlements among multiple participants.  
+Given many pairwise loans between people, the system computes a minimal set of transactions so everyone’s net balance becomes zero.
+
+### Features
+- Graph representation of transactions (adjacency list)
+- Net balance calculation using hash map
+- Priority queue (max-heap/min-heap) for largest creditors and debtors
+- Greedy optimizer to minimize number of settlement transactions
+- JSON-like backup (file I/O) and restore
+- Java frontend for user interaction and notifications
+
+---
+
+## 📁 Folder Structure
+
 
 ## Folder Structure
 - `c-backend/` : Core DSA implementation in C
