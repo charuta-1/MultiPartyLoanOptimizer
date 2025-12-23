@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${title}">Transaction History</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/history.css}" />
+    <script th:src="@{/js/history.js}" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<body>
+<header class="app-header">
+    <div class="header-inner">
+        <div class="brand">SmartSplit Pro</div>
+        <div class="header-actions">
+            <a href="/" class="btn-ghost small">Dashboard</a>
+            <form th:action="@{/logout}" method="post" style="display:inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn-ghost">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+
+<main class="container history-page">
+    <h1>Transaction History</h1>
+    <p class="muted">All transactions (created / deleted) are recorded here with timestamp and actor.</p>
+
+    <div id="historyContainer" class="history-container">
+        <div class="empty">Loading history…</div>
+    </div>
+
+    <div class="history-actions">
+        <button id="refreshHistory" class="btn-secondary">Refresh</button>
+        <button id="exportHistory" class="btn-primary">Export JSON</button>
+    </div>
+</main>
+
+</body>
+</html>

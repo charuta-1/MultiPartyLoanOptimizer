@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>SmartSplit Pro - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:src="@{/js/dashboard.js}" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF tokens for AJAX -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <!-- current authenticated username for client-side features (use safe navigation in case auth is null) -->
+    <meta name="current_user" th:content="${currentUser}" />
+    <meta name="is_admin" th:content="${isAdmin}" />
+</head>
+<body>
+<!-- Top header with logout -->
+<header class="app-header">
+    <div class="header-inner">
+        <div class="brand">SmartSplit Pro</div>
+        <div class="header-actions">
+            <a href="/history" class="btn-ghost small">Transaction History</a>
+            <a href="/personal" class="btn-ghost small">Personal Settlements</a>
+            <form th:action="@{/logout}" method="post" style="display:inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn-ghost">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+<div class="container dashboard-grid">
+    <div class="left-panel">
+        <div class="panel-header">
+            <h2>Transactions</h2>
+            <button id="showAddForm" class="btn-primary small">Add</button>
+        </div>
+
+        <!-- Inline add transaction form (hidden by default) -->
+        <form id="addTxForm" class="add-tx-form" style="display:none">
+            <input type="text" id="payerUsername" name="payerUsername" placeholder="Payer username (defaults to you)" />
+            <input type="text" id="payeeUsername" name="payeeUsername" placeholder="Payee username" required />
+            <input type="number" step="0.01" id="amount" name="amount" placeholder="Amount" required />
+            <input type="text" id="description" name="description" placeholder="Description (optional)" />
+            <div>
+                <button type="submit" class="btn-primary">Add Transaction</button>
+                <button type="button" id="cancelAdd" class="btn-secondary">Cancel</button>
+            </div>
+        </form>
+
+        <div id="tx-list" class="tx-list">
+            <!-- Transactions will be populated by JS -->
+            <div class="empty">Loading transactions…</div>
+        </div>
+
+        <!-- Settlement graph moved back under transactions -->
+        <div class="settlement-panel">
+            <h3 style="margin:0 0 6px">Settlement graph</h3>
+            <canvas id="settleGraph"></canvas>
+        </div>
+
+        <div class="actions">
+            <button id="exportBtn" class="btn-secondary">Export JSON</button>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="panel-header"><h2>Charts</h2></div>
+        <div class="charts">
+            <div class="chart-card small-pie">
+                <h3 style="margin:0 0 8px">Balances (pie)</h3>
+                <div class="pie-wrapper">
+                    <canvas id="balancesPie"></canvas>
+                </div>
+            </div>
+            <div class="chart-card optimize-card">
+                <div class="optimize-header">
+                    <h3 style="margin:0">Smart Optimize</h3>
+                    <button id="optimizeBtn" class="btn-primary">Optimize</button>
+                </div>
+                <div id="instructions" class="instructions" style="margin-top:10px">
+                    <!-- Settlement instructions will appear here -->
+                </div>
+            </div>
+            <!-- Transactions over time chart removed per user request -->
+            <!-- Settlement graph removed from right panel -->
+        </div>
+    </div>
+</div>
+
+<!-- small area for show results -->
+<div id="resultToast" class="toast" style="display:none"></div>
+
+</body>
+</html>
+</body>
+</html>

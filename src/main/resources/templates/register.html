@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Register - SmartSplit Pro</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<!-- Top header (public) -->
+<header class="app-header">
+    <div class="header-inner">
+        <div class="brand">SmartSplit Pro</div>
+        <div class="header-actions">
+            <a href="/history" class="btn-ghost small">Transaction History</a>
+            <a href="/personal" class="btn-ghost small">Personal Settlements</a>
+            <a href="/login" class="btn-ghost small">Login</a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <h1>Register</h1>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <form th:action="@{/register}" th:object="${user}" method="post" class="auth-form">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <label class="field">
+            <span>Username</span>
+            <input type="text" th:field="*{username}" required />
+        </label>
+
+        <label class="field">
+            <span>Display name</span>
+            <input type="text" th:field="*{displayName}" />
+        </label>
+
+        <label class="field">
+            <span>Phone number</span>
+            <input type="tel" th:field="*{phoneNumber}" pattern="[0-9+\-() ]{7,}" required />
+        </label>
+
+        <label class="field">
+            <span>Password</span>
+            <input type="password" th:field="*{password}" required />
+        </label>
+
+        <button class="btn-primary" type="submit">Create account</button>
+    </form>
+    <p>Already registered? <a th:href="@{/login}">Login</a></p>
+</div>
+</body>
+</html>

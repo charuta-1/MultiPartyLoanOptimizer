@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${title}">Personal Settlements</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <script th:src="@{/js/personal.js(v=2)}" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta name="current_user" th:content="${currentUser}" />
+</head>
+<body>
+<header class="app-header">
+    <div class="header-inner">
+        <div class="brand">SmartSplit Pro</div>
+        <div class="header-actions">
+            <a href="/history" class="btn-ghost small">Transaction History</a>
+            <a href="/" class="btn-ghost small">Dashboard</a>
+            <form th:action="@{/logout}" method="post" style="display:inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn-ghost">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+<main class="container">
+    <h1>Personal Settlements</h1>
+    <div id="personalList" class="personal-list">
+        <div class="empty">Loading…</div>
+    </div>
+    <!-- toast -->
+    <div id="resultToast" class="toast" style="display:none"></div>
+</main>
+</body>
+</html>
